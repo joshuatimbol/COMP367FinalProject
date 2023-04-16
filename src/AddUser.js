@@ -12,6 +12,20 @@ const UserForm = () => {
   const [userCheck, setUserCheck] = useState(null);
   const [message, setMessage] = useState('');
 
+  const checkUsernameAvailability = async () => {
+    try {
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/users?username=${username}`);
+      if (response.data.length === 0) {
+        setUserCheck(true);
+        setMessage('Username is available');
+      } else {
+        setUserCheck(false);
+        setMessage('Username is not available');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,7 +42,10 @@ if (!/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
   setMessage('Please enter a valid phone number in Canadian format (XXX-XXX-XXXX)');
   return;
 }
-
+if (!userCheck) {
+  setMessage('Username is not available');
+  return;
+    }
 
     try {
       const response = await axios.post('https://jsonplaceholder.typicode.com/users', {
@@ -67,36 +84,37 @@ if (!/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
   <tr>
     <td>
         <label htmlFor="firstName">First Name: </label>
-        <input type="text" id="firstName" value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
+        <input type="text" id="firstName" value={firstName} onChange={(event) => setFirstName(event.target.value)} required />
     </td>
   </tr>
 
   <tr>
     <td>
         <label htmlFor="lastName">Last Name: </label>
-        <input type="text" id="lastName" value={lastName} onChange={(event) => setLastName(event.target.value)}/>
+        <input type="text" id="lastName" value={lastName} onChange={(event) => setLastName(event.target.value)} required />
     </td>
   </tr>
 
   <tr>
     <td>
         <label htmlFor="username">Username: </label>
-          <input type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)}/>
+          <input type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)} required />
           <br></br>
+          <button type="button" onClick={checkUsernameAvailability}>Check Username Availability</button>
     </td>
   </tr>
 
   <tr>
     <td>
         <label htmlFor="email">Email: </label>
-        <input type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)}/>
+        <input type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
     </td>
   </tr>
 
   <tr>
     <td>
         <label htmlFor="phone">Phone Number: </label>
-        <input type="tel" id="phone" value={phone} onChange={(event) => setPhone(event.target.value)}/>
+        <input type="tel" id="phone" value={phone} onChange={(event) => setPhone(event.target.value)} required/>
     </td>
   </tr>
   <tr>
