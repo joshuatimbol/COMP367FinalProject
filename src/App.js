@@ -26,7 +26,12 @@ function App() {
             </li>
           </ul>
       </div>
-      <div>
+      <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'lightblue',
+    }}>
         <Switch>
           <Route exact path="/">
             <ShowUsers />
