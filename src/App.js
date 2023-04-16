@@ -8,7 +8,12 @@ import AddUser from './AddUser';
 function App() {
   return (
     <BrowserRouter>
-                <div>
+                <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'lightblue',
+    }}>
       <ul >
             <li>
               <Link to="/">Show all Users</Link>
